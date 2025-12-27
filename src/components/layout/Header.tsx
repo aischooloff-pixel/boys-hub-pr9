@@ -7,15 +7,26 @@ import { ProfileModal } from '@/components/profile/ProfileModal';
 import { SideMenu } from '@/components/header/SideMenu';
 import { SearchModal } from '@/components/header/SearchModal';
 import { NotificationsModal } from '@/components/header/NotificationsModal';
-import { currentUser } from '@/data/mockData';
+import { currentUser as mockUser } from '@/data/mockData';
 import { cn } from '@/lib/utils';
+import { useTelegram } from '@/hooks/use-telegram';
 
 export function Header() {
+  const { user: tgUser } = useTelegram();
   const [isProfileOpen, setIsProfileOpen] = useState(false);
   const [isSideMenuOpen, setIsSideMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const currentUser = tgUser ? {
+    ...mockUser,
+    first_name: tgUser.first_name,
+    last_name: tgUser.last_name || '',
+    username: tgUser.username || mockUser.username,
+    avatar_url: tgUser.photo_url || mockUser.avatar_url,
+    is_premium: tgUser.is_premium || mockUser.is_premium
+  } : mockUser;
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);

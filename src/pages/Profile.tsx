@@ -9,14 +9,25 @@ import { ReputationHistoryModal } from '@/components/profile/ReputationHistoryMo
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Settings, Crown, FileText, Bookmark, History, Star } from 'lucide-react';
-import { currentUser, mockArticles } from '@/data/mockData';
+import { currentUser as mockUser, mockArticles } from '@/data/mockData';
+import { useTelegram } from '@/hooks/use-telegram';
 
 export default function Profile() {
+  const { user: tgUser } = useTelegram();
   const [activeTab, setActiveTab] = useState('articles');
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isPremiumOpen, setIsPremiumOpen] = useState(false);
   const [isArticlesOpen, setIsArticlesOpen] = useState(false);
   const [isRepHistoryOpen, setIsRepHistoryOpen] = useState(false);
+
+  const currentUser = tgUser ? {
+    ...mockUser,
+    first_name: tgUser.first_name,
+    last_name: tgUser.last_name || '',
+    username: tgUser.username || mockUser.username,
+    avatar_url: tgUser.photo_url || mockUser.avatar_url,
+    is_premium: tgUser.is_premium || mockUser.is_premium
+  } : mockUser;
 
   const userArticles = mockArticles.filter((a) => a.author_id === currentUser.id);
   const favoriteArticles = mockArticles.slice(0, 3);

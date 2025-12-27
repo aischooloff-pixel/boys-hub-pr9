@@ -11,12 +11,23 @@ import {
   mockArticles,
   mockPodcasts,
   mockCategories,
-  currentUser,
+  currentUser as mockUser,
 } from '@/data/mockData';
 import { Category } from '@/types';
+import { useTelegram } from '@/hooks/use-telegram';
 
 export default function Index() {
+  const { user: tgUser } = useTelegram();
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+
+  const currentUser = tgUser ? {
+    ...mockUser,
+    first_name: tgUser.first_name,
+    last_name: tgUser.last_name || '',
+    username: tgUser.username || mockUser.username,
+    avatar_url: tgUser.photo_url || mockUser.avatar_url,
+    is_premium: tgUser.is_premium || mockUser.is_premium
+  } : mockUser;
 
   // Sort by likes descending for "Популярное"
   const featuredArticles = [...mockArticles]
