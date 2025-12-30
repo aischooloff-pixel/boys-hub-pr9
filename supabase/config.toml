@@ -23,3 +23,30 @@ verify_jwt = false
 
 [functions.tg-report-article]
 verify_jwt = false
+
+[functions.tg-create-article]
+verify_jwt = false
+
+[functions.tg-update-article]
+verify_jwt = false
+
+[functions.tg-delete-article]
+verify_jwt = false
+
+[functions.tg-my-articles]
+verify_jwt = false
+
+[functions.tg-my-reputation]
+verify_jwt = false
+
+[functions.tg-sync-profile]
+verify_jwt = false
+
+[functions.tg-update-privacy]
+verify_jwt = false
+
+[functions.send-moderation]
+verify_jwt = false
+
+[functions.send-edit-moderation]
+verify_jwt = false
